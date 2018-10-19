@@ -25,8 +25,8 @@ class ReadConfigJson(object):
             port=mysql_dict['port'],
             database=mysql_dict['database'])
 
-        # return 'sqlite:////tmp/data.db'
-        return mysql_url
+        return 'sqlite:///C:/data.db'
+        # return mysql_url
 
     def get_ws_server_config(self):
         wsserver = self.__read_json()['ws_server']
