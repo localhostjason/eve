@@ -2,22 +2,22 @@
 import os
 import json
 
+MY_ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
+
 
 class ReadConfigJson(object):
 
-    def __init__(self):
-        path = os.path.abspath(os.path.dirname(__file__))
-        config_path = os.path.join(path, 'config.json')
-        self.config_path = config_path
+    @staticmethod
+    def __read_db_json():
+        db_config = os.path.join(MY_ROOT_DIR, 'config.json')
 
-    def __read_json(self):
-        with open(self.config_path, encoding='utf-8') as f:
+        with open(db_config, encoding='utf-8') as f:
             data = f.read()
             data = json.loads(data)
         return data
 
     def get_mysql_config(self):
-        mysql_dict = self.__read_json()['mysql']
+        mysql_dict = self.__read_db_json()['mysql']
         mysql_url = 'mysql+pymysql://{user}:{password}@{host}:{port}/{database}?charset=utf8'.format(
             user=mysql_dict['user'],
             password=mysql_dict['password'],
@@ -25,13 +25,11 @@ class ReadConfigJson(object):
             port=mysql_dict['port'],
             database=mysql_dict['database'])
 
-        return 'sqlite:///C:/data.db'
-        # return mysql_url
+        return mysql_url
 
-    def get_ws_server_config(self):
-        wsserver = self.__read_json()['ws_server']
-        ws_server_url = '%s:%s' % (wsserver['ip'], wsserver['port'])
-        return ws_server_url
+    @staticmethod
+    def get_sqlite_config():
+        return 'sqlite:///{}'.format(os.path.join(MY_ROOT_DIR, 'db', 'data.db'))
 
 
 class Config:
@@ -41,3 +39,5 @@ class Config:
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
+
+    STATIC_FOLDER = os.path.join(MY_ROOT_DIR, 'static')

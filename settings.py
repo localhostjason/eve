@@ -1,11 +1,19 @@
 from eve_sqlalchemy.config import DomainConfig, ResourceConfig
-from api.domain import *
-from config import Config
+from api.models.domain import *
+from config import Config, MY_ROOT_DIR
 
 
 class Settings(Config):
-    SERVER_NAME = '192.168.120.244:5000'
-    RESOURCE_METHODS = ['GET', 'POST']
+    # SERVER_NAME = '0.0.0.0:6000'
+
+    """
+    @RESOURCE_METHODS 端点 支持http 方法 如: http://demo/user
+    @ITEM_METHODS  端点 支持http 方法 如: http://demo/user/<id>
+    """
+    RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
+    ITEM_METHODS = ['GET', 'PUT', 'PATCH', 'DELETE']
+
+    URL_PREFIX = 'api'
 
     DOMAIN = DomainConfig({
         'parents': ResourceConfig(Parent),

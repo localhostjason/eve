@@ -1,8 +1,8 @@
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
-from api.domain import *
 from api import app, db
+from api.web import *
 
 manager = Manager(app)
 migrate = Migrate(app, db)
