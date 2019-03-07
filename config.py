@@ -39,6 +39,8 @@ class ReadConfigJson(object):
 
 
 class Config:
+    SECRET_KEY = 'iGuard6'
+
     SQLALCHEMY_DATABASE_URI = ReadConfigJson().get_mysql_config()
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
