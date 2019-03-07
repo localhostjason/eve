@@ -29,7 +29,13 @@ class ReadConfigJson(object):
 
     @staticmethod
     def get_sqlite_config():
-        return 'sqlite:///{}'.format(os.path.join(MY_ROOT_DIR, 'db', 'data.db'))
+        sqlite_db_dir = os.path.join(MY_ROOT_DIR, 'db')
+        try:
+            os.makedirs(sqlite_db_dir)
+        except:
+            pass
+
+        return 'sqlite:///{}'.format(os.path.join(sqlite_db_dir, 'data.db'))
 
 
 class Config:
