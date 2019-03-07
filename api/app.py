@@ -9,6 +9,8 @@ from eve_sqlalchemy.validation import ValidatorSQL
 from settings import Settings
 from .db import db
 
+from .hook.pre_hook import PreHook
+
 
 class MyEncoder(BaseJSONEncoder):
     """
@@ -34,5 +36,7 @@ def create_app():
     print(app.config['STATIC_FOLDER'])
     app.static_folder = app.config['STATIC_FOLDER']
     db.init_app(app)
+
+    PreHook.init_app(app)
 
     return app

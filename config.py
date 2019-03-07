@@ -33,11 +33,7 @@ class ReadConfigJson(object):
 
 
 class Config:
-    DEBUG = True
-
     SQLALCHEMY_DATABASE_URI = ReadConfigJson().get_mysql_config()
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
-
-    STATIC_FOLDER = os.path.join(MY_ROOT_DIR, 'static')

@@ -4,6 +4,8 @@ from flask_migrate import Migrate, MigrateCommand
 from api import app, db
 from api.web import *
 
+from init_data import insert_admin
+
 manager = Manager(app)
 migrate = Migrate(app, db)
 
@@ -17,11 +19,16 @@ manager.add_command('db', MigrateCommand)
 
 
 @manager.command
-def deploy():
+def update_db():
     from flask_migrate import upgrade, migrate
 
     migrate()
     upgrade()
+
+
+@manager.command
+def deploy():
+    insert_admin()
 
 
 if __name__ == '__main__':

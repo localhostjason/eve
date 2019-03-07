@@ -4,12 +4,6 @@ migrations/
 upload/
 db/
 *.pyc
-.webassets-*
-console/app/static/public/css/*
-console/app/static/public/js/*
-config.json
-start.sh
-logs/*
 
 venv/
 
@@ -21,18 +15,3 @@ instance/
 .pytest_cache/
 .coverage
 htmlcov/
-
-dist/
-build/
-*.egg-info/
-
-etc/
-
-models/
-console/config.json
-console/config.py
-redis/*
-
-agent-x/
-install_package/*.tgz
-install_package/*.rar
