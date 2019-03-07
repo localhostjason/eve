@@ -1,4 +1,4 @@
-from api.models.domain import *
+from api.models.user import *
 
 
 def insert_admin():

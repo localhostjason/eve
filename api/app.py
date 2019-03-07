@@ -11,7 +11,7 @@ from eve_sqlalchemy.validation import ValidatorSQL
 
 from settings import Settings
 from .db import db
-from .models.domain import User
+from .models.user import User
 
 from .hook.pre_hook import PreHook
 

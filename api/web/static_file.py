@@ -1,6 +1,6 @@
 from flask import redirect
 from .. import app, db
-from api.models.domain import User
+from api.models.user import User
 
 
 @app.route('/')

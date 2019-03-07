@@ -1,5 +1,5 @@
 from eve_sqlalchemy.config import DomainConfig, ResourceConfig
-from api.models.domain import *
+from api.models.user import *
 from config import Config, MY_ROOT_DIR
 import os
 
