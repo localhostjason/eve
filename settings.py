@@ -21,6 +21,8 @@ class Settings(Config):
     X_DOMAINS = '*'
     X_HEADERS = '*'
 
+    ALLOW_UNKNOWN = True  # for user.password_hash updated by password
+
     DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
     STATIC_FOLDER = os.path.join(MY_ROOT_DIR, 'static')
 
