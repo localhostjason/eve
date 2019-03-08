@@ -1,4 +1,5 @@
 import json
+from flask import current_app
 
 
 # delete时候带的where有bug，自己添加一个才有用
@@ -13,7 +14,21 @@ def add_delete_filters(resource, request, lookup):
                 lookup[attrib] = cond[attrib]
 
 
+# 权限控制
+def user_restricted_lookup(resource):
+    user = current_app.auth.get_request_auth_value()
+    # 获得真正的用户
+    print(user.id)
+
+    return {'user_id': user.id}
+
+
+def pre_GET(resource, request, lookup):
+    lookup.update(user_restricted_lookup(resource))
+
+
 class PreHook:
     @staticmethod
     def init_app(app):
+        app.on_pre_GET += pre_GET
         app.on_pre_DELETE += add_delete_filters

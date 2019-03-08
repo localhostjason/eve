@@ -4,8 +4,15 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 
 
+class Test(db.Model):
+    name = db.Column(db.String(64))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    user = db.relationship('User', backref=db.backref('test', cascade='all, delete-orphan'))
+
+
 class User(db.Model):
-    username = db.Column(db.String(64))
+    username = db.Column(db.String(64), unique=True, index=True)
     _password = db.Column(db.String(128))
     token = db.Column(db.String(256))
 

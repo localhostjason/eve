@@ -27,6 +27,8 @@ class MYAuth(TokenAuth):
         data stored on the DB.
         """
         user = User.verify_auth_token(token)
+        if user is not None:
+            self.set_request_auth_value(user)
         return user is not None
 
 

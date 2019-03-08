@@ -28,6 +28,7 @@ class Settings(Config):
 
     DOMAIN = DomainConfig({
         'user': ResourceConfig(User),
+        'test': ResourceConfig(Test),
     }).render()
 
     def load_settings(self):

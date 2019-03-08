@@ -3,9 +3,9 @@ from .. import app, db
 from api.models.user import User
 
 
-@app.route('/')
-def index():
-    user = User.query.filter_by(username='admin').first()
+@app.route('/<string:username>')
+def index(username):
+    user = User.query.filter_by(username=username).first()
     token = user.generate_auth_token(expiration=3600)
 
     user.token = token
