@@ -2,7 +2,6 @@ from flask_cors import CORS
 from eve import Eve
 from eve.io.base import BaseJSONEncoder
 from eve.auth import TokenAuth
-from flask import current_app
 
 from enum import Enum
 

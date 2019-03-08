@@ -4,14 +4,6 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 
 
-class Parent(db.Model):
-    name = db.Column(db.String(100))
-
-
-class Child(db.Model):
-    name = db.Column(db.String(100))
-
-
 class User(db.Model):
     username = db.Column(db.String(64))
     _password = db.Column(db.String(128))
