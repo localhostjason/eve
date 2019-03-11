@@ -31,7 +31,7 @@ class MYAuth(TokenAuth):
         user_token = User.query.get(user.id if user else 0)
         if user is not None:
             self.set_request_auth_value(user)
-        return user is not None and user_token.token
+        return user_token and user_token.token
 
 
 class MyEncoder(BaseJSONEncoder):

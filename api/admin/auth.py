@@ -32,7 +32,7 @@ def get_user_info():
 @app.route('/api/logout', methods=['POST'])
 @requires_auth
 def logout():
-    req_data = request.get_json()
+    req_data = request.get_json() or {}
     token = req_data.get('token')
 
     user = User.query.filter_by(token=token).first_or_404()

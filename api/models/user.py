@@ -60,7 +60,7 @@ class Tenant(db.Model):
     phone = db.Column(db.String(32))
 
     # 用户的类型 普通用户，区代理，总代理
-    type = db.Column(db.Enum(UserType), nullable=False, default=UserType.ordinary_member)
+    type = db.Column(db.Enum(UserType), nullable=False, default=UserType.ordinary)
 
     # 区分注册用户，会员用户
     is_member = db.Column(db.Boolean, default=False, nullable=False)
