@@ -20,6 +20,9 @@ def user_restricted_lookup(resource):
     # 获得真正的用户
     print(user.id)
 
+    if resource == 'user':
+        return {'id': user.id}
+
     return {'user_id': user.id}
 
 

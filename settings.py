@@ -1,5 +1,5 @@
 from eve_sqlalchemy.config import DomainConfig, ResourceConfig
-from api.models.user import *
+from api.models import *
 from config import Config, MY_ROOT_DIR
 import os
 
@@ -28,7 +28,8 @@ class Settings(Config):
 
     DOMAIN = DomainConfig({
         'user': ResourceConfig(User),
-        'test': ResourceConfig(Test),
+        'role': ResourceConfig(Role),
+        'tenant': ResourceConfig(Tenant),
     }).render()
 
     def load_settings(self):

@@ -27,9 +27,11 @@ class MYAuth(TokenAuth):
         data stored on the DB.
         """
         user = User.verify_auth_token(token)
+
+        user_token = User.query.get(user.id if user else 0)
         if user is not None:
             self.set_request_auth_value(user)
-        return user is not None
+        return user is not None and user_token.token
 
 
 class MyEncoder(BaseJSONEncoder):

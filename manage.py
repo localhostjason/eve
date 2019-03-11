@@ -2,7 +2,7 @@ from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
 from api import app, db
-from api.web import *
+from api.admin import *
 
 from init_data import insert_admin
 
