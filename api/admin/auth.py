@@ -4,8 +4,8 @@ from api.models.user import User
 from ..flask_auth import requires_auth
 
 
-@app.route('/api/login', methods=['POST'])
-def login():
+@app.route('/api/admin/login', methods=['POST'])
+def admin_login():
     req_data = request.get_json()
 
     username = req_data.get('username')
@@ -13,28 +13,43 @@ def login():
 
     user = User.query.filter_by(username=username).first()
     if user and user.verify_password(password):
-        token = user.generate_auth_token(expiration=3600).decode('ascii')
+        token = user.generate_auth_token(expiration=36000).decode('ascii')
         user.token = token
         user.update_time_ip()
-        return jsonify({'success': True, 'errmsg': None, 'token': token})
+
+        role = None
+        if user.role:
+            role = user.role.to_dict()
+        return jsonify({'success': True, 'errmsg': None, 'token': token, 'role': role})
 
     return jsonify({'success': False, 'errmsg': '用户名或者密码错误'})
 
 
-@app.route('/api/user_info', methods=['get'])
-def get_user_info():
+@app.route('/api/admin/user_info', methods=['get'])
+def get_admin_user_info():
     token = request.args.get('token')
 
-    user = User.query.filter_by(token=token).first_or_404()
-    return jsonify({'success': True, 'errmsg': None, 'data': user.to_dict()})
+    user = User.query.filter_by(token=token).first()
+    print('start')
+    if not user:
+        return jsonify({'success': False, 'code': 401, 'errmsg': '没有用户或者token失效'})
+
+    # print(user.to_dict())
+    role = None
+    if user.role:
+        role = user.role.to_dict()
+    return jsonify({'success': True, 'errmsg': None, 'user': user.to_dict(), 'role': role})
 
 
-@app.route('/api/logout', methods=['POST'])
+@app.route('/api/admin/logout', methods=['POST'])
 @requires_auth
-def logout():
+def admin_logout():
     req_data = request.get_json() or {}
     token = req_data.get('token')
 
-    user = User.query.filter_by(token=token).first_or_404()
+    user = User.query.filter_by(token=token).first()
+    if not user:
+        return jsonify({'success': False, 'code': 401, 'errmsg': 'Token失效'})
+
     user.token = None
     return jsonify({'success': True, 'errmsg': None})

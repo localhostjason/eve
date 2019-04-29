@@ -39,7 +39,7 @@ class ReadConfigJson(object):
 
 
 class Config:
-    SECRET_KEY = 'iGuard6'
+    SECRET_KEY = 'Demo'
 
     SQLALCHEMY_DATABASE_URI = ReadConfigJson().get_sqlite_config()
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True

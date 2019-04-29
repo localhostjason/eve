@@ -2,6 +2,5 @@ from enum import Enum
 
 
 class UserType(Enum):
-    ordinary = '普通成员'
-    area = '区代理'
-    general = '总代理'
+    front = '前端用户'
+    admin = '后端用户'

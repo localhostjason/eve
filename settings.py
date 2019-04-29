@@ -20,6 +20,7 @@ class Settings(Config):
     IF_MATCH = False  # disable etag from http://docs.python-eve.org/en/latest/features.html#concurrency
     X_DOMAINS = '*'
     X_HEADERS = '*'
+    HATEOAS = False
 
     ALLOW_UNKNOWN = True  # for user.password_hash updated by password
 
@@ -29,12 +30,9 @@ class Settings(Config):
     DOMAIN = DomainConfig({
         'user': ResourceConfig(User),
         'role': ResourceConfig(Role),
-        'tenant': ResourceConfig(Tenant),
+        'address': ResourceConfig(Address),
     }).render()
 
     def load_settings(self):
         return {name: getattr(self, name) for name in dir(self) if
                 not name.startswith('__') and not hasattr(getattr(self, name), '__call__')}
-
-# if __name__ == '__main__':
-#     Settings().load_settings()

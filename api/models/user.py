@@ -15,6 +15,8 @@ class User(db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     _password = db.Column(db.String(128))
 
+    phone = db.Column(db.String(11), index=True)
+
     login_time = db.Column(db.DateTime)
     login_ip = db.Column(db.String(16))
 
@@ -55,19 +57,19 @@ class User(db.Model):
         self.login_ip = request.remote_addr
 
 
-class Tenant(db.Model):
-    name = db.Column(db.String(126), index=True)
-    phone = db.Column(db.String(32))
-
-    # 用户的类型 普通用户，区代理，总代理
-    type = db.Column(db.Enum(UserType), nullable=False, default=UserType.ordinary)
-
-    # 区分注册用户，会员用户
-    is_member = db.Column(db.Boolean, default=False, nullable=False)
+class Address(db.Model):
+    """
+    收件地址
+    """
+    recipient_name = db.Column(db.String(32))
+    recipient_phone = db.Column(db.String(32))
 
     province = db.Column(db.String(16))
     city = db.Column(db.String(16))
+    area = db.Column(db.String(16))
+    address = db.Column(db.String(128))
 
-    owner_id = db.Column(db.Integer, db.ForeignKey('tenant.id'), index=True)
+    is_default = db.Column(db.Boolean, default=False)
 
-    owner = db.relationship('Tenant', remote_side='Tenant.id', backref=db.backref('tenant', uselist=False))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('address', cascade='all, delete-orphan'))

@@ -13,6 +13,8 @@ from .db import db
 from .models.user import User
 
 from .hook.pre_hook import PreHook
+from .hook.extra_hook import ExtraHook
+from .hook.post_hook import PostHook
 
 
 class MYAuth(TokenAuth):
@@ -60,6 +62,8 @@ def create_app():
     app.static_folder = app.config['STATIC_FOLDER']
     db.init_app(app)
 
+    ExtraHook.init_app(app)
     PreHook.init_app(app)
+    PostHook.init_app(app)
 
     return app

@@ -1,5 +1,6 @@
 import json
-from flask import current_app
+from flask import current_app, abort
+from .user import UserHook
 
 
 # delete时候带的where有bug，自己添加一个才有用
@@ -18,7 +19,8 @@ def add_delete_filters(resource, request, lookup):
 def user_restricted_lookup(resource):
     user = current_app.auth.get_request_auth_value()
     # 获得真正的用户
-    print(user.id)
+    if resource in ['role']:
+        return {}
 
     if resource == 'user':
         return {'id': user.id}
@@ -30,8 +32,27 @@ def pre_GET(resource, request, lookup):
     lookup.update(user_restricted_lookup(resource))
 
 
+def pre_POST(resource, request):
+    print(resource, request)
+
+
+def pre_PATCH(resource, request, lookup):
+    lookup.update(user_restricted_lookup(resource))
+
+
+def pre_DELETE(resource, request, lookup):
+    lookup.update(user_restricted_lookup(resource))
+    add_delete_filters(resource, request, lookup)
+
+
 class PreHook:
     @staticmethod
     def init_app(app):
-        app.on_pre_GET += pre_GET
         app.on_pre_DELETE += add_delete_filters
+
+        app.on_pre_GET += pre_GET
+        app.on_pre_POST += pre_POST
+        app.on_pre_PATCH += pre_PATCH
+        app.on_pre_DELETE += pre_DELETE
+
+        UserHook.init_pre(app)
