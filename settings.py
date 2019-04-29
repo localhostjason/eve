@@ -32,6 +32,10 @@ class Settings(Config):
         'role': ResourceConfig(Role),
         'address': ResourceConfig(Address),
     }).render()
+    # dynamic relation cannot be json serialized , relationship backref => model name
+    DOMAIN['user']['datasource']['projection']['address'] = 0
+
+    DOMAIN['address']['schema']['user']['data_relation']['embeddable'] = True
 
     def load_settings(self):
         return {name: getattr(self, name) for name in dir(self) if

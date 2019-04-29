@@ -72,4 +72,4 @@ class Address(db.Model):
     is_default = db.Column(db.Boolean, default=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('address', cascade='all, delete-orphan'))
+    user = db.relationship('User', backref=db.backref('address', lazy='dynamic', cascade='all, delete-orphan'))

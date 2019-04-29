@@ -25,7 +25,8 @@ def user_restricted_lookup(resource):
     if resource == 'user':
         return {'id': user.id}
 
-    return {'user_id': user.id}
+    # return {'user_id': user.id}
+    return {}
 
 
 def pre_GET(resource, request, lookup):
