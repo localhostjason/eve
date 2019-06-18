@@ -1,7 +1,8 @@
 from flask import request, jsonify
 from .. import app
 from api.models.user import User
-from ..flask_auth import requires_auth
+from ..flask_auth import token_auth
+from api.common.message import *
 
 
 @app.route('/api/admin/login', methods=['POST'])
@@ -17,39 +18,35 @@ def admin_login():
         user.token = token
         user.update_time_ip()
 
-        role = None
-        if user.role:
-            role = user.role.to_dict()
-        return jsonify({'success': True, 'errmsg': None, 'token': token, 'role': role})
+        role = user.role.to_dict() if user.role else {}
+        return jsonify(ok_message({**user.to_dict(), **role}))
 
-    return jsonify({'success': False, 'errmsg': '用户名或者密码错误'})
+    return jsonify(error_message('用户名或者密码错误')), 421
 
 
 @app.route('/api/admin/user_info', methods=['get'])
+@token_auth.login_required
 def get_admin_user_info():
-    token = request.args.get('token')
+    token = token_auth.get_auth()
+    token = token.get('token')
 
     user = User.query.filter_by(token=token).first()
-    print('start')
     if not user:
-        return jsonify({'success': False, 'code': 401, 'errmsg': '没有用户或者token失效'})
+        return jsonify(error_message('没有用户或者token失效')), 421
 
-    # print(user.to_dict())
-    role = None
-    if user.role:
-        role = user.role.to_dict()
-    return jsonify({'success': True, 'errmsg': None, 'user': user.to_dict(), 'role': role})
+    role = user.role.to_dict() if user.role else {}
+    return jsonify(ok_message(ok_message({**user.to_dict(), **role})))
 
 
 @app.route('/api/admin/logout', methods=['POST'])
-@requires_auth
+@token_auth.login_required
 def admin_logout():
-    req_data = request.get_json() or {}
-    token = req_data.get('token')
+    token = token_auth.get_auth()
+    token = token.get('token')
 
     user = User.query.filter_by(token=token).first()
     if not user:
-        return jsonify({'success': False, 'code': 401, 'errmsg': 'Token失效'})
+        return jsonify(error_message('Token失效')), 421
 
     user.token = None
-    return jsonify({'success': True, 'errmsg': None})
+    return jsonify(ok_message())

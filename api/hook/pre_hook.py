@@ -17,8 +17,11 @@ def add_delete_filters(resource, request, lookup):
 
 # 权限控制
 def user_restricted_lookup(resource):
+    # 获取token user
     user = current_app.auth.get_request_auth_value()
-    # 获得真正的用户
+    if user.username == 'admin':
+        return {}
+
     if resource in ['role']:
         return {}
 

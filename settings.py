@@ -9,6 +9,9 @@ class Settings(Config):
     DEBUG = True
     EMBEDDING = True
 
+    PAGINATION_DEFAULT = 1000
+    PAGINATION_LIMIT = 1000
+
     """
     @RESOURCE_METHODS 端点 支持http 方法 如: http://demo/user
     @ITEM_METHODS  端点 支持http 方法 如: http://demo/user/<id>
