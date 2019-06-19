@@ -56,7 +56,7 @@ settings = Settings().load_settings()
 
 
 def create_app():
-    app = Eve(validator=ValidatorSQL, data=SQL, settings=settings, auth=MYAuth)
+    app = Eve(validator=ValidatorSQL, data=SQL, settings=settings, auth=MYAuth, static_url_path='')
     CORS(app)
     # print(app.config['STATIC_FOLDER'])
     app.static_folder = app.config['STATIC_FOLDER']
