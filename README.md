@@ -1,4 +1,8 @@
-# Eve restful api框架
+# Eve restful api脚手架框架
+
+eve教程：https://docs.python-eve.org/en/stable
+
+changeLog: https://docs.python-eve.org/en/stable/changelog.html
 
 目前暂时不维护，理由：
 1. 不主流
