@@ -6,7 +6,7 @@ Eve==0.7.10
 Eve-SQLAlchemy==0.7.0
 Events==0.2.2
 Flask==0.12
-Flask-Cors==3.0.7
+Flask-Cors==3.0.9
 Flask-HTTPAuth==3.3.0
 Flask-Migrate==2.2.1
 Flask-PyMongo==0.5.2
