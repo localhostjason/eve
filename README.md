@@ -26,7 +26,11 @@ DEBUG调试:
 python manage.py runserver
 
 -h ip
+
 -p 端口
+
 -db init db创建
+
 -upgrade_db db升级
-- deploy 初始化数据
+
+-deploy 初始化数据
